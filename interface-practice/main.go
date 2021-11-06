@@ -2,8 +2,11 @@ package main
 
 import "fmt"
 
-type englishBot struct{}
+type bot interface {
+	getGreeting() string
+}
 
+type englishBot struct{}
 type spanishBot struct{}
 
 func main() {
@@ -14,6 +17,10 @@ func main() {
 	printGreeting(sb)
 }
 
+func printGreeting(b bot) {
+	fmt.Println(b.getGreeting())
+}
+
 // For these functions, we can omit the value (eb/sb) because it is not being used
 // EX: func (eb englishBot) --> eb not needed in this case
 func (englishBot) getGreeting() string {
@@ -21,16 +28,8 @@ func (englishBot) getGreeting() string {
 	return "Hello there!"
 }
 
-func printGreeting(eb englishBot) {
-	fmt.Println(eb.getGreeting())
-}
-
 func (spanishBot) getGreeting() string {
 	// Very custom logic for generating a Spanish greeting :)
 	return "Hola!"
 }
 
-
-func printGreeting(sb spanishBot) {
-	fmt.Println(sb.getGreeting())
-}
